@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 from pathlib import Path
+from zipfile import ZipFile
 
 from docx import Document
 from docx.enum.table import WD_CELL_VERTICAL_ALIGNMENT, WD_TABLE_ALIGNMENT
@@ -463,8 +465,23 @@ def main():
 
     section_heading(doc, 7, "Список использованных источников и воспроизводимость")
     p(doc, "1. Gas Turbine CO and NOx Emission Data Set [Электронный ресурс] // UCI Machine Learning Repository. — 2019. — DOI: 10.24432/C5WC95. — URL: https://archive.ics.uci.edu/dataset/551 (дата обращения: 18.09.2026).")
-    p(doc, "Код: analysis.py и make_report.py; зависимости: requirements.txt; исходные данные: data/raw/gt_2011.csv … gt_2015.csv. Команда запуска и структура файлов описаны в README.md. Итоговые метрики и диагностические значения находятся в outputs/results.json.")
+    p(doc, "Исходный код: https://github.com/kotyasmol/gas-turbine-co-regression-lab. Основные файлы: analysis.py, make_report.py, requirements.txt и data/raw/gt_2011.csv … gt_2015.csv. Команда запуска приведена в README.md; численные результаты и диагностика — в outputs/results.json.")
+    props = doc.core_properties
+    author = " ".join(details["student"].split()[:2])
+    props.author = author
+    props.last_modified_by = author
+    props.comments = ""
+    props.title = "Лабораторная работа № 1 — линейная многомерная регрессия"
+    props.subject = "Математические методы теории систем"
+    props.keywords = ""
+    now_utc = datetime.now(timezone.utc).replace(tzinfo=None)
+    props.created = now_utc
+    props.modified = now_utc
     doc.save(DEST)
+    with ZipFile(DEST) as archive:
+        core = archive.read("docProps/core.xml").decode("utf-8")
+        if "python-docx" in core.lower():
+            raise RuntimeError("Generator metadata remains in docProps/core.xml")
     print(DEST)
 
 

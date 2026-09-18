@@ -4,7 +4,7 @@
 
 ## Данные
 
-Источник: [Gas Turbine CO and NOx Emission Data Set, UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/551/gas%2Bturbine%2Bco%2Band%2Bnox%2Bemission%2Bdata%2Bset), DOI: [10.24432/C5WC95](https://doi.org/10.24432/C5WC95). Авторы предоставляют данные по лицензии CC BY 4.0. Оригинальные CSV за 2011–2015 годы находятся в `data/raw/`; ZIP сохранён как получен с UCI.
+Источник: [Gas Turbine CO and NOx Emission Data Set, UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/551/gas%2Bturbine%2Bco%2Band%2Bnox%2Bemission%2Bdata%2Bset), DOI: [10.24432/C5WC95](https://doi.org/10.24432/C5WC95). Авторы предоставляют данные по лицензии CC BY 4.0. Оригинальные CSV за 2011–2015 годы находятся в `data/raw/`; сведения об источнике повторены в `data/raw/README.md`.
 
 Каждая строка — агрегированные за час измерения одной турбины. Исходные файлы не содержат точной временной метки, но строки упорядочены хронологически. Цель — `CO`. Признаки: `AT`, `AP`, `AH`, `AFDP`, `GTEP`, `TIT`, `TAT`, `TEY`, `CDP`. `NOX` намеренно не используется: задача предполагает оценку CO без второго датчика выбросов.
 
