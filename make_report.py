@@ -161,13 +161,6 @@ def setup(doc):
     tabcap.paragraph_format.space_before = Pt(8)
     tabcap.paragraph_format.space_after = Pt(4)
     tabcap.paragraph_format.line_spacing = 1.0
-    for name in ("List Bullet",):
-        style = doc.styles[name]
-        style.font.name = "Times New Roman"
-        style.font.size = Pt(14)
-        style.font.color.rgb = BLACK
-        style.paragraph_format.line_spacing = 1.5
-        style.paragraph_format.space_after = Pt(0)
     footer = section.footer.paragraphs[0]
     footer.alignment = WD_ALIGN_PARAGRAPH.CENTER
     footer.paragraph_format.first_line_indent = Cm(0)
@@ -187,6 +180,21 @@ def p(doc, text, bold_start=None):
         para.add_run(text[len(bold_start):])
     else:
         para.add_run(text)
+    return para
+
+
+def list_item(doc, text):
+    """Create a portable list item without Word's font-dependent bullet glyph."""
+    para = doc.add_paragraph()
+    para.paragraph_format.left_indent = Cm(1.25)
+    para.paragraph_format.first_line_indent = Cm(-0.75)
+    para.paragraph_format.space_after = Pt(0)
+    para.paragraph_format.line_spacing = 1.5
+    para.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    run = para.add_run("— " + text)
+    run.font.name = "Times New Roman"
+    run.font.size = Pt(14)
+    run.font.color.rgb = BLACK
     return para
 
 
@@ -461,7 +469,7 @@ def main():
         "Отдельно исследовать высокие концентрации: взвешенные потери, робастные методы и границы прогнозного интервала.",
         "Периодически переоценивать сдвиг прогноза по новым годам и проверить переносимость на других турбинах.",
     ]:
-        doc.add_paragraph(text, style="List Bullet")
+        list_item(doc, text)
 
     section_heading(doc, 7, "Список использованных источников и воспроизводимость")
     p(doc, "1. Gas Turbine CO and NOx Emission Data Set [Электронный ресурс] // UCI Machine Learning Repository. — 2019. — DOI: 10.24432/C5WC95. — URL: https://archive.ics.uci.edu/dataset/551 (дата обращения: 18.09.2026).")
