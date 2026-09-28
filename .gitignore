@@ -4,4 +4,4 @@ __pycache__/
 outputs/
 data/uci_gas_turbine.zip
 *.docx
-report_details.json
+.private_contacts.json

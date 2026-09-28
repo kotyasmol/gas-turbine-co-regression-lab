@@ -237,7 +237,7 @@ def main():
     if not RESULTS.exists():
         raise FileNotFoundError("Run analysis.py before make_report.py")
     if not DETAILS.exists():
-        raise FileNotFoundError("Create report_details.json with your title-page details; see README.md")
+        raise FileNotFoundError("Missing project file: report_details.json")
     r = json.loads(RESULTS.read_text(encoding="utf-8"))
     details = json.loads(DETAILS.read_text(encoding="utf-8"))
     q = r["data_quality"]
